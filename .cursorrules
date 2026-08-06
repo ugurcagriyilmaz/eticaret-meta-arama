@@ -4,18 +4,18 @@ Proje: Türkiye e-ticaret meta-arama motoru (portföy/demo, 0 bütçe). NL sorgu
 birkaç Türk sitesinden ürün **site + link + fiyat**. Ticari değil.
 
 Mimari (5 katman) — dosya = katman:
-- understand.py (K1, NL→attribute; yer tutucu/LLM)
-- search.py     (K2, Google Programmable Search → URL'ler)
-- extract.py    (K3, JSON-LD/schema.org parse; CSS fallback; GERÇEK çalışır)
-- match.py      (K4, attribute filtre; yer tutucu/LLM)
-- build_data.py (boru hattı → data/data.json)
+- understand.py (K1, NL→attribute; Türkçe fold; yer tutucu/LLM)
+- search.py     (K2, Playwright+Chromium headless=False → 3 siteden ürün URL'leri; Google YOK)
+- extract.py    (K3, JSON-LD/schema.org parse; curl_cffi fetch; CSS fallback; GERÇEK çalışır)
+- match.py      (K4, Türkçe fold + kategori-tutarlılık filtresi; yer tutucu/LLM)
+- build_data.py (boru hattı: temiz sorgu + slug ön-eleme + site round-robin → data/data.json)
 - site/         (K5, data.json fetch → liste)
 
-Hosting: toplayıcı lokalde koşar → data.json push → GitHub Pages statik sunar.
+Hosting: toplayıcı lokalde koşar → data.json push → GitHub Pages (Actions) statik sunar.
 
 Kurallar:
-- Yalnızca herkese açık ürün sayfaları; robots.txt'ye saygı; düşük hız; cache.
-- Sırlar sadece yerel .env'de (GOOGLE_API_KEY, GOOGLE_CSE_ID) — repoya PUSH'lanmaz.
+- Yalnızca herkese açık ürün sayfaları; robots.txt'ye saygı (curl_cffi ile çekilir); düşük hız; cache.
+- Harici arama API'si/anahtarı YOK — .env gerekmez.
 - Kimlik doğrulaması gereken adımları otomatik geçme; kullanıcıya devret.
 - Yeni kod eklerken imzaları koru: understand(query)->dict, extract(url)->dict,
   search(query,want)->list, match(products,attrs)->list.

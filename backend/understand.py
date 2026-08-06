@@ -12,6 +12,15 @@ import re
 import sys
 import json
 
+# Türkçe karakterleri ASCII'ye katla (ı/ş/ç/ğ/ü/ö → i/s/c/g/u/o) — kullanıcı
+# "ayakkabi" da yazsa "ayakkabı" da tutsun. Diğer modüller de bunu kullanır.
+_TR = str.maketrans("ıİşŞçÇğĞüÜöÖ", "iissccgguuoo")
+
+
+def fold(s: str) -> str:
+    return (s or "").translate(_TR).casefold()
+
+
 RENKLER = {
     "beyaz", "siyah", "kırmızı", "mavi", "yeşil", "sarı", "gri", "pembe",
     "mor", "turuncu", "kahverengi", "lacivert", "bej", "bordo",
@@ -27,10 +36,12 @@ KATEGORILER = {
 
 
 def understand(query: str) -> dict:
-    q = query.lower()
-    renk = next((r for r in RENKLER if r in q), None)
-    cinsiyet = next((v for k, v in CINSIYET.items() if k in q), None)
-    kategori = next((k for k in sorted(KATEGORILER, key=len, reverse=True) if k in q), None)
+    q = fold(query)  # Türkçe-normalize (ayakkabı ↔ ayakkabi)
+    renk = next((r for r in RENKLER if fold(r) in q), None)
+    cinsiyet = next((v for k, v in CINSIYET.items() if fold(k) in q), None)
+    kategori = next(
+        (k for k in sorted(KATEGORILER, key=len, reverse=True) if fold(k) in q), None
+    )
     # beden: "beden 42", "42 numara", "boyu M"
     beden = None
     m = re.search(r"\b(beden|numara|no)\s*[:\-]?\s*(\d{2}|[sml]|xl|xxl)\b", q)

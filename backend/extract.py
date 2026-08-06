@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import sys
+import time
 from typing import Any, Optional
 
 import httpx
@@ -39,15 +40,23 @@ def fetch(url: str) -> tuple[str, str]:
     """
     try:
         from curl_cffi import requests as cffi
+        from curl_cffi.requests.exceptions import SSLError, ConnectionError as CErr
 
-        r = cffi.get(
-            url,
-            impersonate="chrome",
-            timeout=TIMEOUT,
-            headers={"Accept-Language": HEADERS["Accept-Language"]},
-        )
-        r.raise_for_status()
-        return r.text, str(r.url)
+        last_err: Exception = RuntimeError("fetch")
+        for attempt in range(4):
+            try:
+                r = cffi.get(
+                    url,
+                    impersonate="chrome",
+                    timeout=TIMEOUT,
+                    headers={"Accept-Language": HEADERS["Accept-Language"]},
+                )
+                r.raise_for_status()
+                return r.text, str(r.url)
+            except (SSLError, CErr) as e:  # GoodbyeDPI kaynakli flaky TLS
+                last_err = e
+                time.sleep(1.0)
+        raise last_err
     except Exception:
         with httpx.Client(
             headers=HEADERS, timeout=TIMEOUT, follow_redirects=True

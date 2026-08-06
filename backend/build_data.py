@@ -21,12 +21,12 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 from understand import understand
-from match import match
+from match import match, slug_ok
 import extract as extract_mod
 
 try:
     from search import search
-except Exception:  # noqa: BLE001 - .env yoksa import aşamasında patlamasın
+except Exception:  # noqa: BLE001 - playwright yoksa arama atlansın, boru hattı çökmesin
     search = None  # type: ignore
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -38,17 +38,31 @@ DELAY_SN = 2.0  # nazik hız
 _robots_cache: dict[str, robotparser.RobotFileParser] = {}
 
 
+def _robots_lines(base: str) -> list[str] | None:
+    """robots.txt'yi curl_cffi ile çeker (bu siteler urllib'e 403 verir; o yüzden
+    stdlib robotparser.read() kullanılamaz — 403'te 'hepsini yasakla'ya düşer)."""
+    try:
+        from curl_cffi import requests as cffi
+
+        r = cffi.get(base + "/robots.txt", impersonate="chrome", timeout=15)
+        if r.status_code == 200 and r.text:
+            return r.text.splitlines()
+    except Exception:  # noqa: BLE001
+        pass
+    return None
+
+
 def robots_ok(url: str) -> bool:
     p = urlparse(url)
     base = f"{p.scheme}://{p.netloc}"
     rp = _robots_cache.get(base)
     if rp is None:
-        rp = robotparser.RobotFileParser()
-        rp.set_url(base + "/robots.txt")
-        try:
-            rp.read()
-        except Exception:  # noqa: BLE001
-            rp = None  # okunamıyorsa engelleme (demo, düşük hız)
+        lines = _robots_lines(base)
+        if lines is None:
+            rp = None  # okunamadıysa engelleme (demo, düşük hız + cache)
+        else:
+            rp = robotparser.RobotFileParser()
+            rp.parse(lines)
         _robots_cache[base] = rp  # type: ignore
     if rp is None:
         return True
@@ -65,13 +79,42 @@ def cached_extract(url: str) -> dict:
     return data
 
 
+def _balanced(hits: list[dict], limit: int) -> list[str]:
+    """Sitelere göre round-robin seçim — tek site tüm limiti doldurmasın
+    (meta-arama = her siteden temsil)."""
+    from collections import defaultdict, deque
+
+    bysite: dict[str, deque] = defaultdict(deque)
+    for h in hits:
+        bysite[h["site"]].append(h["link"])
+    out: list[str] = []
+    while len(out) < limit and any(bysite.values()):
+        for site in list(bysite):
+            if bysite[site]:
+                out.append(bysite[site].popleft())
+                if len(out) >= limit:
+                    break
+    return out
+
+
+def _search_terms(query: str, attrs: dict) -> str:
+    """Site aramaları anahtar-kelime tabanlı: ham cümle ('...beden 42') yerine
+    attribute'lardan temiz sorgu kur ('beyaz erkek spor ayakkabı') → alaka artar."""
+    terms = [attrs.get("renk"), attrs.get("cinsiyet"), attrs.get("kategori"), attrs.get("model")]
+    clean = " ".join(t for t in terms if t)
+    return clean or query
+
+
 def build(query: str, limit: int = 8) -> dict:
     attrs = understand(query)
     urls: list[str] = []
     if search is not None:
         try:
-            hits = search(query, want=limit)
-            urls = [h["link"] for h in hits]
+            # geniş aday havuzu çek; kategoriye göre ön-ele; site-dengeli seç
+            hits = search(_search_terms(query, attrs), want=limit * 4)
+            urls = _balanced(
+                [h for h in hits if slug_ok(h["link"], attrs)], limit
+            )
         except Exception as e:  # noqa: BLE001
             print(f"[uyarı] arama atlandı: {e}")
     products = []

@@ -6,7 +6,7 @@ Kişisel portföy/demo — **ticari servis değildir**, 0 bütçe.
 
 ## Nasıl çalışır (5 katman)
 1. **Anlama** — sorguyu `{kategori, renk, cinsiyet, model, beden}`'e çevirir.
-2. **Keşif** — Google Programmable Search (site-whitelist) ile ürün URL'leri bulur.
+2. **Keşif** — **Playwright + gerçek Chromium** ile her sitenin kendi aramasını render edip ürün URL'lerini toplar (harici API/anahtar yok).
 3. **Çıkarım** — ürün sayfasındaki **JSON-LD (schema.org)** verisini parse eder (fiyat, ad, marka…). Yoksa CSS fallback.
 4. **Eşleştirme** — sonuçları istenen özelliklere göre süzer/puanlar.
 5. **Sunum** — statik site `data.json`'u okuyup listeler.
@@ -17,22 +17,23 @@ Toplayıcı **senin bilgisayarında** (ev IP'si) koşar → `data.json` üretir 
 
 ## Kurulum
 ```bash
-winget install Python.Python.3.12        # Python yoksa
+winget install Python.Python.3.12                    # Python yoksa
 python -m venv venv
 venv\Scripts\pip install -r requirements.txt
-copy .env.example .env                    # GOOGLE_API_KEY, GOOGLE_CSE_ID doldur
+venv\Scripts\python -m playwright install chromium   # Keşif için tarayıcı
 ```
+Harici arama API'si veya anahtar gerekmez; `.env` yok.
 
 ## Kullanım
 ```bash
-# Tek ürün çıkarımı (anahtar gerektirmez):
+# Tek ürün çıkarımı:
 venv\Scripts\python backend\extract.py "https://www.trendyol.com/.../p-123456"
 
-# Site temizlik raporu:
-venv\Scripts\python backend\probe.py
+# Keşif (Playwright ile 3 siteden ürün linkleri):
+venv\Scripts\python backend\search.py "beyaz erkek spor ayakkabı"
 
-# Uçtan uca (Google anahtarları gerekir): sorgu → data/data.json
-venv\Scripts\python backend\build_data.py "beyaz erkek spor ayakkabı beden 42"
+# Uçtan uca: sorgu → data/data.json (gerçek, kategori-tutarlı, site-dengeli):
+venv\Scripts\python backend\build_data.py "beyaz erkek spor ayakkabı beden 42" --limit 9
 
 # Siteyi lokalde gör:
 #   site/ klasörünü bir statik sunucuyla aç (ör. VS Code Live Server)
@@ -43,5 +44,9 @@ Yalnızca herkese açık ürün sayfaları okunur, **robots.txt**'ye saygı gös
 düşük tutulur ve sonuçlar cache'lenir. Kimlik doğrulaması gereken hiçbir adım
 otomatikleştirilmez.
 
+## Canlı demo
+GitHub Pages: **https://ugurcagriyilmaz.github.io/eticaret-meta-arama/**
+
 ## Durum
-Erken iskelet. Ayrıntı ve yol haritası için **CLAUDE.md**'ye bakın.
+Uçtan uca çalışıyor: 3 site (Trendyol/Hepsiburada/n11), gerçek veri.
+Ayrıntı ve yol haritası için **CLAUDE.md**'ye bakın.
