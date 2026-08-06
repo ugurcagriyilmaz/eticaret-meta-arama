@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TR E-Ticaret Meta Arama — Demo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🛒 Türkiye E-Ticaret Meta Arama</h1>
+    <p class="sub">Portföy demosu — birden çok Türk e-ticaret sitesinden ürün · link · fiyat</p>
+  </header>
+
+  <main>
+    <section class="query">
+      <div id="sorgu">—</div>
+      <div id="meta" class="meta"></div>
+    </section>
+
+    <section id="liste" class="grid" aria-live="polite"></section>
+
+    <p id="bos" class="bos" hidden>Henüz veri yok. Toplayıcıyı çalıştırın: <code>python backend/build_data.py "..."</code></p>
+  </main>
+
+  <footer>
+    <span id="guncelleme">—</span> ·
+    <span>Kişisel demo, ticari servis değildir. Veriler herkese açık ürün sayfalarından, düşük hızda toplanır.</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

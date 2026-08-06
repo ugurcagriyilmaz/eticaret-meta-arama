@@ -1,0 +1,11 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Ortam degiskenleri (SIR)
+.env
+
+# Gecici / cache
+data/*.tmp
+data/cache/

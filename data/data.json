@@ -1,0 +1,32 @@
+{
+  "sorgu": "beyaz erkek spor ayakkabı beden 42 (ÖRNEK VERİ)",
+  "attributes": {
+    "kategori": "spor ayakkabı",
+    "renk": "beyaz",
+    "cinsiyet": "erkek",
+    "model": null,
+    "beden": "42"
+  },
+  "guncelleme": "2026-08-06T00:00:00+00:00",
+  "adet": 2,
+  "urunler": [
+    {
+      "ad": "ÖRNEK — Erkek Beyaz Sneaker 42 (gerçek veri build_data.py ile gelir)",
+      "fiyat": "1299.90",
+      "para_birimi": "TRY",
+      "site": "trendyol.com",
+      "link": "https://www.trendyol.com/",
+      "gorsel": "",
+      "skor": 4
+    },
+    {
+      "ad": "ÖRNEK — Beyaz Spor Ayakkabı Erkek",
+      "fiyat": "1499.00",
+      "para_birimi": "TRY",
+      "site": "hepsiburada.com",
+      "link": "https://www.hepsiburada.com/",
+      "gorsel": "",
+      "skor": 3
+    }
+  ]
+}
