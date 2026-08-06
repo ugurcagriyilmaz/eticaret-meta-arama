@@ -31,13 +31,30 @@ TIMEOUT = 20.0
 
 
 def fetch(url: str) -> tuple[str, str]:
-    """Sayfayı indirir; (html, final_url) döner."""
-    with httpx.Client(
-        headers=HEADERS, timeout=TIMEOUT, follow_redirects=True
-    ) as client:
-        r = client.get(url)
+    """Sayfayı indirir; (html, final_url) döner.
+
+    Önce curl_cffi (Chrome TLS/JA3 taklidi) denenir — TR e-ticaret siteleri düz
+    HTTP istemcilerini 403 ile engelliyor; tarayıcı parmak-izi bunu aşar.
+    curl_cffi yoksa/başarısızsa httpx'e düşer.
+    """
+    try:
+        from curl_cffi import requests as cffi
+
+        r = cffi.get(
+            url,
+            impersonate="chrome",
+            timeout=TIMEOUT,
+            headers={"Accept-Language": HEADERS["Accept-Language"]},
+        )
         r.raise_for_status()
         return r.text, str(r.url)
+    except Exception:
+        with httpx.Client(
+            headers=HEADERS, timeout=TIMEOUT, follow_redirects=True
+        ) as client:
+            r = client.get(url)
+            r.raise_for_status()
+            return r.text, str(r.url)
 
 
 def _first(value: Any) -> Any:
