@@ -1,0 +1,45 @@
+name: Deploy site to GitHub Pages
+
+# /site klasörünü + data/data.json'u birlikte yayınlar.
+# (Native Pages sadece root veya /docs'tan yayınlar; bu workflow /site'yi kullanır.)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Yayin dizinini hazirla (site + data.json)
+        run: |
+          mkdir -p _site
+          cp -r site/* _site/
+          mkdir -p _site/data
+          cp data/data.json _site/data.json
+          cp data/data.json _site/data/data.json
+
+      - name: Pages artefaktini yukle
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Pages'e deploy et
+        id: deployment
+        uses: actions/deploy-pages@v4
