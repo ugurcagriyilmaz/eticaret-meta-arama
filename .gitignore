@@ -9,3 +9,7 @@ __pycache__/
 # Gecici / cache
 data/*.tmp
 data/cache/
+
+# Loglar
+scripts/run_daily.log
+*.log
