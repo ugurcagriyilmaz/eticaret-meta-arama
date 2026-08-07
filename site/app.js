@@ -1,6 +1,8 @@
-// K5 — Sunum: data.json'u çek, ürünleri site/link/fiyat olarak listele.
-// GitHub Pages'te /site kökten yayınlanırsa data.json bir üst dizinde olur.
+// K5 — Sunum: hem hazır data.json'u gösterir HEM DE canlı arama yapar.
+// Canlı arama, backend API'sini (FastAPI) çağırır. API adresi api.json'dan okunur
+// (tünel URL'i değişince orası güncellenir); yoksa localhost'a düşer.
 const DATA_URLS = ["../data/data.json", "./data.json", "data/data.json"];
+let API = "http://localhost:8000"; // api.json ile ezilir
 
 function tl(fiyat, pb) {
   if (fiyat == null || fiyat === "") return "—";
@@ -31,27 +33,77 @@ function kart(u) {
   return el;
 }
 
-async function yukle() {
-  let data = null;
+// Ortak render — hem başlangıç verisi hem canlı arama sonucu için.
+function render(data) {
+  const liste = document.getElementById("liste");
+  const bos = document.getElementById("bos");
+  liste.innerHTML = "";
+  const urunler = (data && Array.isArray(data.urunler)) ? data.urunler : [];
+  bos.hidden = urunler.length > 0;
+  document.getElementById("sorgu").textContent = data && data.sorgu ? `“${data.sorgu}”` : "—";
+  const a = (data && data.attributes) || {};
+  document.getElementById("meta").textContent =
+    [a.cinsiyet, a.renk, a.kategori, a.model, a.beden].filter(Boolean).join(" · ");
+  document.getElementById("guncelleme").textContent =
+    "Güncelleme: " + (data && data.guncelleme ? new Date(data.guncelleme).toLocaleString("tr-TR") : "—");
+  urunler.forEach((u) => liste.appendChild(kart(u)));
+}
+
+async function loadApiBase() {
+  try {
+    const r = await fetch("api.json", { cache: "no-store" });
+    if (r.ok) {
+      const j = await r.json();
+      if (j && j.api) API = j.api.replace(/\/+$/, "");
+    }
+  } catch (_) { /* localhost varsayılanı kalır */ }
+}
+
+async function yukleVarsayilan() {
   for (const url of DATA_URLS) {
     try {
       const r = await fetch(url, { cache: "no-store" });
-      if (r.ok) { data = await r.json(); break; }
-    } catch (_) { /* sıradaki yolu dene */ }
+      if (r.ok) { render(await r.json()); return; }
+    } catch (_) { /* sıradaki */ }
   }
-  const liste = document.getElementById("liste");
-  const bos = document.getElementById("bos");
-  if (!data || !Array.isArray(data.urunler) || data.urunler.length === 0) {
-    bos.hidden = false;
-    return;
-  }
-  document.getElementById("sorgu").textContent = `“${data.sorgu || ""}”`;
-  const a = data.attributes || {};
-  document.getElementById("meta").textContent = [a.cinsiyet, a.renk, a.kategori, a.model, a.beden]
-    .filter(Boolean).join(" · ");
-  document.getElementById("guncelleme").textContent =
-    "Güncelleme: " + (data.guncelleme ? new Date(data.guncelleme).toLocaleString("tr-TR") : "—");
-  data.urunler.forEach((u) => liste.appendChild(kart(u)));
+  render(null);
 }
 
-yukle();
+function durumGoster(html) {
+  const d = document.getElementById("durum");
+  d.hidden = !html;
+  d.innerHTML = html || "";
+}
+
+async function ara(q) {
+  const btn = document.getElementById("ara");
+  btn.disabled = true;
+  durumGoster('🔎 Arıyor… <span class="ipucu">(canlı — 3 site taranıyor, ~30-60 sn sürebilir)</span>');
+  try {
+    const r = await fetch(`${API}/search?q=${encodeURIComponent(q)}&limit=6`, { cache: "no-store" });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const data = await r.json();
+    render(data);
+    durumGoster(data.urunler && data.urunler.length
+      ? "" : "Sonuç bulunamadı — başka bir sorgu deneyin.");
+  } catch (e) {
+    durumGoster(
+      "⚠️ Canlı arama şu an çalışmıyor (arama sunucusu kapalı olabilir). " +
+      "Bu demo canlı aramayı ev makinesinde koşan bir pipeline ile yapar; " +
+      "aşağıdaki hazır sonuçlar her zaman görüntülenir."
+    );
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+document.getElementById("ara-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const q = document.getElementById("q").value.trim();
+  if (q.length >= 2) ara(q);
+});
+
+(async function init() {
+  await loadApiBase();
+  await yukleVarsayilan();
+})();

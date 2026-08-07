@@ -11,6 +11,30 @@ header { padding: 28px 20px 8px; text-align: center; }
 h1 { margin: 0; font-size: 24px; }
 .sub { color: var(--mut); margin: 6px 0 0; }
 main { max-width: 1080px; margin: 0 auto; padding: 16px 20px 40px; }
+
+/* Arama kutusu */
+.search { margin: 8px 0 4px; }
+#ara-form { display: flex; gap: 8px; max-width: 620px; margin: 0 auto; }
+#q {
+  flex: 1; padding: 12px 14px; font-size: 15px;
+  background: var(--card); color: var(--tx);
+  border: 1px solid var(--line); border-radius: 10px; outline: none;
+}
+#q:focus { border-color: var(--acc); }
+#q::placeholder { color: var(--mut); }
+#ara {
+  padding: 12px 22px; font-size: 15px; font-weight: 600; cursor: pointer;
+  background: var(--acc); color: #1a1207; border: none; border-radius: 10px;
+  transition: opacity .12s;
+}
+#ara:hover { opacity: .9; }
+#ara:disabled { opacity: .55; cursor: progress; }
+.durum {
+  text-align: center; color: var(--mut); margin: 12px auto 0; max-width: 620px;
+  font-size: 14px;
+}
+.durum .ipucu { color: var(--mut); font-size: 12px; }
+
 .query { text-align: center; margin: 14px 0 22px; }
 #sorgu { font-size: 20px; font-weight: 600; }
 .meta { color: var(--acc); margin-top: 4px; min-height: 20px; }

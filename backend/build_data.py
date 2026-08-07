@@ -105,7 +105,7 @@ def _search_terms(query: str, attrs: dict) -> str:
     return clean or query
 
 
-def build(query: str, limit: int = 8) -> dict:
+def build(query: str, limit: int = 8, delay: float = DELAY_SN) -> dict:
     attrs = understand(query)
     urls: list[str] = []
     if search is not None:
@@ -126,7 +126,7 @@ def build(query: str, limit: int = 8) -> dict:
             products.append(cached_extract(url))
         except Exception as e:  # noqa: BLE001
             print(f"[extract hata] {url}: {e}")
-        time.sleep(DELAY_SN)
+        time.sleep(delay)
 
     ranked = match(products, attrs)
     # sunum için sadeleştirilmiş kayıtlar (K5 index.html bunu okur)

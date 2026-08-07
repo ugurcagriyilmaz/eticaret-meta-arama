@@ -1,0 +1,4 @@
+{
+  "api": "https://continues-forwarding-delete-slow.trycloudflare.com",
+  "not": "Canlı arama API'si (Cloudflare Tunnel -> localhost:8000). URL degisince serve_public ile guncellenir."
+}
