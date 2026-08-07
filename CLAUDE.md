@@ -6,10 +6,10 @@ Türkiye e-ticaret **meta-arama motoru** (portföy/demo, 0 bütçe). Kullanıcı
 sitesinden eşleşen ürünlerin **site + link + fiyat**ını getirir. Ticari servis değil.
 
 ## Mimari (5 katman)
-1. **Anlama (K1)** — `backend/understand.py` — NL sorgu → `{kategori, renk, cinsiyet, model, beden}`. *Şimdilik kural-tabanlı yer tutucu; ileride LLM.*
+1. **Anlama (K1)** — `backend/understand.py` — NL sorgu → `{kategori, renk, cinsiyet, model, beden}`. **Claude (LLM) ana yol** (sözlükte olmayan kategori/renk/eş anlamlıları da anlar); anahtar yoksa/çağrı düşerse **kural fallback**. Ortak yardımcı: `backend/llm.py`.
 2. **Keşif (K2)** — `backend/search.py` — **Playwright + gerçek Chromium (`headless=False`)** ile her whitelist sitesinin KENDİ arama sayfasını açar, JS render'ı bekler, DOM'daki ürün linklerini toplar. **Google API YOK.** (Not: Hepsiburada Akamai-tarzı güvenlik duvarı nedeniyle görünür tarayıcı ister; toplayıcı lokalde koştuğu için sorun değil.)
 3. **Çıkarım (K3)** — `backend/extract.py` — ürün sayfası → JSON-LD (schema.org Product/Offer) parse → `{ad, fiyat, para_birimi, marka, gorsel, stok, url}`. JSON-LD yoksa CSS/meta fallback. **Gerçek çalışır.**
-4. **Eşleştirme (K4)** — `backend/match.py` — sonuçları attribute'lara göre filtrele/puanla. *Basit kural yer tutucu; ileride LLM.*
+4. **Eşleştirme (K4)** — `backend/match.py` — sonuçları attribute'lara göre filtrele/puanla. **Claude (LLM) ana yol** (tek çağrıda semantik alaka 0-3 + kategori uyumu); anahtar yoksa/çağrı düşerse **kural fallback**. `slug_ok` (indirim öncesi ucuz ön-eleme) her zaman kural.
 5. **Sunum (K5)** — `site/index.html + app.js + style.css` — `data.json`'u fetch edip listeler.
 
 `backend/build_data.py` boru hattını (K1→K2→K3→K4) birleştirir ve `data/data.json` üretir.
@@ -62,6 +62,6 @@ E-posta: `ugur.cagri.yilmaz@gmail.com`. Harici anahtar yok.
 - [x] GitHub public repo + push + Pages (Actions ile /site + data.json).
 - [x] K2 keşif: Playwright ile 3 site (Trendyol/HB/n11) — Google'sız çalışıyor.
 - [x] `build_data.py` uçtan uca: gerçek, kategori-tutarlı, site-dengeli `data.json`.
-- [ ] K1 (understand) ve K4 (match) yer tutucularını LLM ile değiştir.
+- [x] K1 (understand) ve K4 (match) → LLM (Claude) + kural fallback (`backend/llm.py`).
 - [ ] Jira board + Cursor kurulumları.
 - [ ] `run_daily.bat` + Windows Task Scheduler ile gecelik otomatik toplama.

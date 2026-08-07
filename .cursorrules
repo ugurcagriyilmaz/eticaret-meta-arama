@@ -4,10 +4,11 @@ Proje: Türkiye e-ticaret meta-arama motoru (portföy/demo, 0 bütçe). NL sorgu
 birkaç Türk sitesinden ürün **site + link + fiyat**. Ticari değil.
 
 Mimari (5 katman) — dosya = katman:
-- understand.py (K1, NL→attribute; Türkçe fold; yer tutucu/LLM)
+- understand.py (K1, NL→attribute; Claude LLM ana yol + kural fallback; Türkçe fold)
 - search.py     (K2, Playwright+Chromium headless=False → 3 siteden ürün URL'leri; Google YOK)
 - extract.py    (K3, JSON-LD/schema.org parse; curl_cffi fetch; CSS fallback; GERÇEK çalışır)
-- match.py      (K4, Türkçe fold + kategori-tutarlılık filtresi; yer tutucu/LLM)
+- match.py      (K4, Claude LLM alaka puanı + kural fallback; slug_ok her zaman kural)
+- llm.py         (ortak Claude yardimcisi: structured(); anahtar yoksa None -> kural fallback)
 - build_data.py (boru hattı: temiz sorgu + slug ön-eleme + site round-robin → data/data.json)
 - site/         (K5, data.json fetch → liste)
 
