@@ -173,6 +173,10 @@ def _image_from_embedded(html: str) -> Optional[str]:
     m = re.search(r'productImageDTO"?:\s*\{[^}]*?"path"\s*:\s*"([^"]+)"', html)
     if m:
         return m.group(1).replace("{0}", "640")
+    # 2. kaynak: imagePath şablonu (bazı ürünlerde productImageDTO yok)
+    m = re.search(r'"imagePath"\s*:\s*"([^"]+\{0\}[^"]*)"', html)
+    if m:
+        return m.group(1).replace("{0}", "640")
     return None
 
 

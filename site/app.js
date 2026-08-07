@@ -23,8 +23,14 @@ function kart(u) {
   el.href = u.link || "#";
   el.target = "_blank";
   el.rel = "noopener noreferrer";
+  const g = u.gorsel || "";
+  // <img> + onerror: yüklenmeyen görselde boş/bozuk alan yerine temiz placeholder.
+  const img = g
+    ? `<img src="${g}" alt="" loading="lazy" referrerpolicy="no-referrer"
+           onerror="this.closest('.gorsel').classList.add('bos');this.remove();">`
+    : "";
   el.innerHTML = `
-    <div class="gorsel" style="background-image:url('${u.gorsel || ""}')"></div>
+    <div class="gorsel${g ? "" : " bos"}">${img}</div>
     <div class="body">
       <span class="site">${u.site || ""}</span>
       <div class="ad">${u.ad || "İsimsiz ürün"}</div>
