@@ -3,6 +3,30 @@
 let API = "http://localhost:8000";
 
 const $ = (id) => document.getElementById(id);
+const PROGRESS_MS = 30_000;
+let progressRaf = null;
+
+function progressBaslat() {
+  const bar = $("progress-bar");
+  const track = bar.parentElement;
+  bar.style.transition = "none";
+  bar.style.width = "0%";
+  track.setAttribute("aria-valuenow", "0");
+  cancelAnimationFrame(progressRaf);
+  progressRaf = requestAnimationFrame(() => {
+    bar.style.transition = `width ${PROGRESS_MS}ms linear`;
+    bar.style.width = "100%";
+  });
+}
+
+function progressBitir() {
+  cancelAnimationFrame(progressRaf);
+  const bar = $("progress-bar");
+  const track = bar.parentElement;
+  bar.style.transition = "width 0.25s ease";
+  bar.style.width = "100%";
+  track.setAttribute("aria-valuenow", "100");
+}
 
 function tl(fiyat, pb) {
   if (fiyat == null || fiyat === "") return "—";
@@ -64,8 +88,6 @@ function sonucGoster(data) {
   liste.innerHTML = "";
   const urunler = (data && Array.isArray(data.urunler)) ? data.urunler : [];
   $("sorgu").textContent = data && data.sorgu ? `“${data.sorgu}”` : "—";
-  const a = (data && data.attributes) || {};
-  $("meta").textContent = [a.cinsiyet, a.renk, a.kategori, a.model, a.beden].filter(Boolean).join(" · ");
   $("guncelleme").textContent =
     "Güncelleme: " + (data && data.guncelleme ? new Date(data.guncelleme).toLocaleString("tr-TR") : "—");
   urunler.forEach((u) => liste.appendChild(kart(u)));
@@ -87,7 +109,8 @@ async function ara(q) {
   durumGoster("");
   $("ara").disabled = true;
   $("loading-q").textContent = q;
-  view("loading");          // <-- eski sonuçları GİZLE, sadece "arıyor" göster
+  view("loading");
+  progressBaslat();
   try {
     const r = await fetch(`${API}/search?q=${encodeURIComponent(q)}&limit=6`, { cache: "no-store" });
     if (!r.ok) throw new Error("HTTP " + r.status);
@@ -103,6 +126,7 @@ async function ara(q) {
       "Bu demo, aramayı ev makinesinde koşan bir pipeline ile yapar."
     );
   } finally {
+    progressBitir();
     $("ara").disabled = false;
   }
 }

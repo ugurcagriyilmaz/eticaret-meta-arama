@@ -60,8 +60,15 @@ main { max-width: 1080px; margin: 0 auto; padding: 22px 20px 40px; }
   border-radius: 50%; animation: spin .8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
-.loading-txt { font-size: 17px; font-weight: 600; margin: 0 0 6px; }
-.ipucu { color: var(--mut); font-size: 13px; margin: 0; }
+.loading-txt { font-size: 17px; margin: 0 0 18px; }
+.loading-txt strong { font-weight: 700; }
+.progress {
+  max-width: 320px; height: 6px; margin: 0 auto;
+  background: var(--line); border-radius: 999px; overflow: hidden;
+}
+.progress-bar {
+  width: 0%; height: 100%; background: var(--acc); border-radius: 999px;
+}
 
 /* Sonuçlar */
 .sonuc { margin-top: 4px; }
@@ -73,7 +80,6 @@ main { max-width: 1080px; margin: 0 auto; padding: 22px 20px 40px; }
 .geri:hover { border-color: var(--acc); color: var(--acc); }
 .query { text-align: center; margin: 22px 0 22px; }
 #sorgu { font-size: 20px; font-weight: 700; letter-spacing: -.02em; }
-.meta { color: var(--mut); margin-top: 5px; min-height: 18px; font-size: 14px; }
 
 .grid {
   display: grid; gap: 18px;

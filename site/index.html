@@ -7,7 +7,7 @@
        görsel isteklerini blokluyor; no-referrer ile görseller yüklenir. -->
   <meta name="referrer" content="no-referrer" />
   <title>TR E-Ticaret Meta Arama — Demo</title>
-  <link rel="stylesheet" href="style.css?v=3" />
+  <link rel="stylesheet" href="style.css?v=4" />
 </head>
 <body>
   <header>
@@ -41,8 +41,10 @@
     <!-- 2) Arama sırasında -->
     <section id="loading" class="loading" hidden>
       <div class="spinner" aria-hidden="true"></div>
-      <p class="loading-txt">“<span id="loading-q"></span>” aranıyor…</p>
-      <p class="ipucu">3 site canlı taranıyor · ~30-60 sn sürebilir</p>
+      <p class="loading-txt"><strong>“<span id="loading-q"></span>”</strong> aranıyor…</p>
+      <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div id="progress-bar" class="progress-bar"></div>
+      </div>
     </section>
 
     <!-- 3) Sonuçlar -->
@@ -50,7 +52,6 @@
       <button type="button" id="geri" class="geri">← Anasayfa</button>
       <div class="query">
         <div id="sorgu">—</div>
-        <div id="meta" class="meta"></div>
       </div>
       <div id="liste" class="grid" aria-live="polite"></div>
       <p id="bos" class="bos" hidden>Sonuç bulunamadı — başka bir sorgu deneyin.</p>
@@ -62,6 +63,6 @@
     <span id="guncelleme" class="guncelleme"></span>
   </footer>
 
-  <script src="app.js?v=3"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>
