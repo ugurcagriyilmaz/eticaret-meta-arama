@@ -83,7 +83,8 @@ SCHEMA = {
 def classify(msg: str, files: str):
     import anthropic
     key = (ROOT / ".anthropic_key").read_text(encoding="utf-8").strip()
-    client = anthropic.Anthropic(api_key=key)
+    # timeout: ağ/DPI takılırsa 10 dk asılı kalmasın; hızlı hata ver
+    client = anthropic.Anthropic(api_key=key, timeout=30.0, max_retries=1)
     epics = "\n".join(f"  {k}: {v}" for k, v in EPICS.items())
     prompt = f"""Bir git commit'ini iyi yapılandırılmış bir Jira issue'suna çevir. TÜRKÇE yaz, docs/jira-format.md formatına uy.
 
@@ -121,10 +122,13 @@ def move_to(key: str, target: str) -> bool:
 
 
 def main() -> int:
+    # İşlenecek commit: argümandan gelen SHA (hook verir) yoksa HEAD.
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    ref = args[0] if args else "HEAD"
     dry = "--dry-run" in sys.argv
-    msg = sh("git", "log", "-1", "--pretty=%B")
+    msg = sh("git", "log", "-1", ref, "--pretty=%B")
     subj = msg.splitlines()[0] if msg else ""
-    sha = sh("git", "log", "-1", "--pretty=%h")
+    sha = sh("git", "log", "-1", ref, "--pretty=%h")
 
     if "[skip-jira]" in msg.lower():
         print("[skip-jira] — atlandı")
@@ -133,7 +137,7 @@ def main() -> int:
         print("merge commit — atlandı")
         return 0
 
-    files = sh("git", "diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD")
+    files = sh("git", "diff-tree", "--no-commit-id", "--name-only", "-r", ref)
 
     # Mesajda var olan bir issue anahtarı referans mı?
     m = re.search(r"\bEMA-\d+\b", msg)
