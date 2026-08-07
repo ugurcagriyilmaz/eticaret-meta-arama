@@ -1,8 +1,8 @@
-// K5 — Sunum: hem hazır data.json'u gösterir HEM DE canlı arama yapar.
-// Canlı arama, backend API'sini (FastAPI) çağırır. API adresi api.json'dan okunur
-// (tünel URL'i değişince orası güncellenir); yoksa localhost'a düşer.
-const DATA_URLS = ["../data/data.json", "./data.json", "data/data.json"];
-let API = "http://localhost:8000"; // api.json ile ezilir
+// K5 — Sunum: canlı arama (backend API) + landing/loading/sonuç görünümleri.
+// API adresi api.json'dan okunur (tünel URL'i); yoksa localhost'a düşer.
+let API = "http://localhost:8000";
+
+const $ = (id) => document.getElementById(id);
 
 function tl(fiyat, pb) {
   if (fiyat == null || fiyat === "") return "—";
@@ -33,20 +33,38 @@ function kart(u) {
   return el;
 }
 
-// Ortak render — hem başlangıç verisi hem canlı arama sonucu için.
-function render(data) {
-  const liste = document.getElementById("liste");
-  const bos = document.getElementById("bos");
+// --- Görünüm durumları: tek seferde biri görünür ---
+function view(name) {
+  $("welcome").hidden = name !== "welcome";
+  $("loading").hidden = name !== "loading";
+  $("sonuc").hidden = name !== "sonuc";
+}
+
+function durumGoster(html) {
+  $("durum").hidden = !html;
+  $("durum").innerHTML = html || "";
+}
+
+function anasayfa() {
+  durumGoster("");
+  $("q").value = "";
+  $("liste").innerHTML = "";
+  view("welcome");
+  $("q").focus();
+}
+
+function sonucGoster(data) {
+  const liste = $("liste");
   liste.innerHTML = "";
   const urunler = (data && Array.isArray(data.urunler)) ? data.urunler : [];
-  bos.hidden = urunler.length > 0;
-  document.getElementById("sorgu").textContent = data && data.sorgu ? `“${data.sorgu}”` : "—";
+  $("sorgu").textContent = data && data.sorgu ? `“${data.sorgu}”` : "—";
   const a = (data && data.attributes) || {};
-  document.getElementById("meta").textContent =
-    [a.cinsiyet, a.renk, a.kategori, a.model, a.beden].filter(Boolean).join(" · ");
-  document.getElementById("guncelleme").textContent =
+  $("meta").textContent = [a.cinsiyet, a.renk, a.kategori, a.model, a.beden].filter(Boolean).join(" · ");
+  $("guncelleme").textContent =
     "Güncelleme: " + (data && data.guncelleme ? new Date(data.guncelleme).toLocaleString("tr-TR") : "—");
   urunler.forEach((u) => liste.appendChild(kart(u)));
+  $("bos").hidden = urunler.length > 0;
+  view("sonuc");
 }
 
 async function loadApiBase() {
@@ -56,54 +74,49 @@ async function loadApiBase() {
       const j = await r.json();
       if (j && j.api) API = j.api.replace(/\/+$/, "");
     }
-  } catch (_) { /* localhost varsayılanı kalır */ }
-}
-
-async function yukleVarsayilan() {
-  for (const url of DATA_URLS) {
-    try {
-      const r = await fetch(url, { cache: "no-store" });
-      if (r.ok) { render(await r.json()); return; }
-    } catch (_) { /* sıradaki */ }
-  }
-  render(null);
-}
-
-function durumGoster(html) {
-  const d = document.getElementById("durum");
-  d.hidden = !html;
-  d.innerHTML = html || "";
+  } catch (_) { /* localhost varsayılanı */ }
 }
 
 async function ara(q) {
-  const btn = document.getElementById("ara");
-  btn.disabled = true;
-  durumGoster('🔎 Arıyor… <span class="ipucu">(canlı — 3 site taranıyor, ~30-60 sn sürebilir)</span>');
+  durumGoster("");
+  $("ara").disabled = true;
+  $("loading-q").textContent = q;
+  view("loading");          // <-- eski sonuçları GİZLE, sadece "arıyor" göster
   try {
     const r = await fetch(`${API}/search?q=${encodeURIComponent(q)}&limit=6`, { cache: "no-store" });
     if (!r.ok) throw new Error("HTTP " + r.status);
     const data = await r.json();
-    render(data);
-    durumGoster(data.urunler && data.urunler.length
-      ? "" : "Sonuç bulunamadı — başka bir sorgu deneyin.");
+    sonucGoster(data);
+    if (!data.urunler || data.urunler.length === 0) {
+      durumGoster("Sonuç bulunamadı — başka bir sorgu dene.");
+    }
   } catch (e) {
+    view("welcome");
     durumGoster(
       "⚠️ Canlı arama şu an çalışmıyor (arama sunucusu kapalı olabilir). " +
-      "Bu demo canlı aramayı ev makinesinde koşan bir pipeline ile yapar; " +
-      "aşağıdaki hazır sonuçlar her zaman görüntülenir."
+      "Bu demo, aramayı ev makinesinde koşan bir pipeline ile yapar."
     );
   } finally {
-    btn.disabled = false;
+    $("ara").disabled = false;
   }
 }
 
-document.getElementById("ara-form").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const q = document.getElementById("q").value.trim();
-  if (q.length >= 2) ara(q);
+function baslat(q) {
+  q = (q || "").trim();
+  if (q.length < 2) return;
+  $("q").value = q;
+  ara(q);
+}
+
+// --- Olaylar ---
+$("ara-form").addEventListener("submit", (e) => { e.preventDefault(); baslat($("q").value); });
+$("geri").addEventListener("click", anasayfa);
+$("logo").addEventListener("click", (e) => { e.preventDefault(); anasayfa(); });
+$("ornekler").addEventListener("click", (e) => {
+  if (e.target.classList.contains("ornek")) baslat(e.target.textContent);
 });
 
 (async function init() {
   await loadApiBase();
-  await yukleVarsayilan();
+  view("welcome");
 })();

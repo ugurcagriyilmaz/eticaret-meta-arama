@@ -11,8 +11,10 @@
 </head>
 <body>
   <header>
-    <h1>🛒 Türkiye E-Ticaret Meta Arama</h1>
-    <p class="sub">Portföy demosu — 3 Türk e-ticaret sitesinden canlı ürün · link · fiyat · görsel 🛍️</p>
+    <a id="logo" href="#" aria-label="Anasayfa">
+      <h1>🛒 Türkiye E-Ticaret Meta Arama</h1>
+    </a>
+    <p class="sub">Trendyol · Hepsiburada · n11 — tek seferde canlı ara 🛍️</p>
   </header>
 
   <main>
@@ -25,14 +27,35 @@
       <div id="durum" class="durum" hidden></div>
     </section>
 
-    <section class="query">
-      <div id="sorgu">—</div>
-      <div id="meta" class="meta"></div>
+    <!-- 1) Landing / anasayfa -->
+    <section id="welcome" class="welcome">
+      <p class="welcome-tag">Ne aramıştın? Yaz, <b>Ara</b>'ya bas — 3 site senin için taranır.</p>
+      <div class="ornekler" id="ornekler">
+        <button type="button" class="ornek">beyaz erkek spor ayakkabı</button>
+        <button type="button" class="ornek">haki mont</button>
+        <button type="button" class="ornek">kırmızı kadın topuklu ayakkabı</button>
+        <button type="button" class="ornek">lacivert erkek kaban</button>
+        <button type="button" class="ornek">siyah deri cüzdan</button>
+      </div>
     </section>
 
-    <section id="liste" class="grid" aria-live="polite"></section>
+    <!-- 2) Arama sırasında -->
+    <section id="loading" class="loading" hidden>
+      <div class="spinner" aria-hidden="true"></div>
+      <p class="loading-txt">“<span id="loading-q"></span>” aranıyor…</p>
+      <p class="ipucu">3 site canlı taranıyor · ~30-60 sn sürebilir</p>
+    </section>
 
-    <p id="bos" class="bos" hidden>Henüz veri yok. Toplayıcıyı çalıştırın: <code>python backend/build_data.py "..."</code></p>
+    <!-- 3) Sonuçlar -->
+    <section id="sonuc" class="sonuc" hidden>
+      <button type="button" id="geri" class="geri">← Anasayfa</button>
+      <div class="query">
+        <div id="sorgu">—</div>
+        <div id="meta" class="meta"></div>
+      </div>
+      <div id="liste" class="grid" aria-live="polite"></div>
+      <p id="bos" class="bos" hidden>Sonuç bulunamadı — başka bir sorgu deneyin.</p>
+    </section>
   </main>
 
   <footer>

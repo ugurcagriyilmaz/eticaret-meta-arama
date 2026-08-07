@@ -30,10 +30,42 @@ main { max-width: 1080px; margin: 0 auto; padding: 16px 20px 40px; }
 #ara:hover { opacity: .9; }
 #ara:disabled { opacity: .55; cursor: progress; }
 .durum {
-  text-align: center; color: var(--mut); margin: 12px auto 0; max-width: 620px;
+  text-align: center; color: #ffc38a; margin: 12px auto 0; max-width: 620px;
   font-size: 14px;
 }
-.durum .ipucu { color: var(--mut); font-size: 12px; }
+
+#logo { text-decoration: none; color: inherit; display: inline-block; }
+
+/* Landing / anasayfa */
+.welcome { text-align: center; padding: 26px 10px 10px; }
+.welcome-tag { color: var(--mut); font-size: 16px; margin: 0 0 18px; }
+.ornekler { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.ornek {
+  padding: 8px 14px; font-size: 14px; cursor: pointer;
+  background: var(--card); color: var(--tx);
+  border: 1px solid var(--line); border-radius: 999px; transition: border-color .12s, color .12s;
+}
+.ornek:hover { border-color: var(--acc); color: var(--acc); }
+
+/* Arama sırasında */
+.loading { text-align: center; padding: 48px 10px; }
+.spinner {
+  width: 46px; height: 46px; margin: 0 auto 18px;
+  border: 4px solid var(--line); border-top-color: var(--acc);
+  border-radius: 50%; animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-txt { font-size: 18px; font-weight: 600; margin: 0 0 6px; }
+.ipucu { color: var(--mut); font-size: 13px; margin: 0; }
+
+/* Sonuçlar */
+.sonuc { margin-top: 6px; }
+.geri {
+  background: none; border: 1px solid var(--line); color: var(--mut);
+  padding: 7px 14px; border-radius: 8px; cursor: pointer; font-size: 14px;
+  transition: border-color .12s, color .12s;
+}
+.geri:hover { border-color: var(--acc); color: var(--acc); }
 
 .query { text-align: center; margin: 14px 0 22px; }
 #sorgu { font-size: 20px; font-weight: 600; }

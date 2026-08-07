@@ -77,10 +77,15 @@ def search(query: str, want: int = 9) -> list[dict]:
     with sync_playwright() as p:
         # NOT: headless=False zorunlu. Hepsiburada (Akamai tarzı güvenlik duvarı)
         # gerçek/görünür tarayıcı ister; headless'te "Güvenlik" sayfasına düşer.
-        # Toplayıcı lokalde koştuğu için görünür pencere sorun değil.
+        # Ama pencereyi EKRAN DIŞINA alıyoruz → headed kalır (HB çalışır) ama
+        # kullanıcının önünde pop-up olmaz.
         browser = p.chromium.launch(
             headless=False,
-            args=["--disable-blink-features=AutomationControlled"],
+            args=[
+                "--disable-blink-features=AutomationControlled",
+                "--window-position=-3200,-3200",  # ekran dışı: görünmez ama gerçek pencere
+                "--window-size=1280,800",
+            ],
         )
         context = browser.new_context(
             locale="tr-TR",
