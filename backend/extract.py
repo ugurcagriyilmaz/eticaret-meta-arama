@@ -145,6 +145,24 @@ def from_structured(html: str, url: str) -> Optional[dict]:
     }
 
 
+def _price_from_embedded(html: str) -> Optional[str]:
+    """Bazı siteler (ör. n11) fiyatı JSON-LD'de değil, sayfa içindeki JSON
+    state'inde tutar. Yapısal veri + meta + CSS başarısızsa son çare olarak
+    gömülü JSON'dan fiyatı çeker. 'displayPriceFloat' = gösterilen/indirimli
+    fiyat (kullanıcının ödediği) tercih edilir; yoksa 'priceFloat' (liste)."""
+    import re
+
+    for key in ("displayPriceFloat", "priceFloat"):
+        m = re.search(rf'"{key}"\s*:\s*([0-9]+(?:\.[0-9]+)?)', html)
+        if m:
+            return m.group(1)
+    # "price":"1.979,64 TL" biçimi → 1979.64
+    m = re.search(r'"price"\s*:\s*"([\d.,]+)\s*TL"', html)
+    if m:
+        return m.group(1).replace(".", "").replace(",", ".")
+    return None
+
+
 def from_css(html: str, url: str) -> dict:
     """JSON-LD yoksa temel CSS/meta fallback (kaba, siteye göre gevşek)."""
     soup = BeautifulSoup(html, "lxml")
@@ -169,6 +187,8 @@ def from_css(html: str, url: str) -> dict:
         )
         if el:
             fiyat = (el.get("content") or el.get("data-price") or el.get_text()).strip()
+    if not fiyat:
+        fiyat = _price_from_embedded(html)  # gömülü JSON (n11 vb.) — son çare
     return {
         "ad": ad,
         "fiyat": fiyat,
