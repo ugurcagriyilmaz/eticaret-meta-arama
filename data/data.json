@@ -1,95 +1,96 @@
 {
-  "sorgu": "haki erkek mont",
+  "sorgu": "lacivert erkek sneakers 43 numara",
   "attributes": {
-    "kategori": "mont",
-    "renk": "haki",
+    "kategori": "sneaker",
+    "renk": "lacivert",
     "cinsiyet": "erkek",
     "model": null,
-    "beden": null,
-    "_ham_sorgu": "haki erkek mont"
+    "beden": "43",
+    "_ham_sorgu": "lacivert erkek sneakers 43 numara",
+    "_kaynak": "llm"
   },
-  "guncelleme": "2026-08-07T09:58:28.370921+00:00",
+  "guncelleme": "2026-08-07T17:26:01.943065+00:00",
   "adet": 9,
   "urunler": [
     {
-      "ad": "Pierre Cardin Erkek Haki Mont 50325313-vr027 56 Fiyatları ve Özellikleri",
-      "fiyat": "1979.1",
-      "para_birimi": "TRY",
-      "site": "n11.com",
-      "link": "https://www.n11.com/urun/pierre-cardin-erkek-haki-mont-50325313-vr027-129309295",
-      "gorsel": "https://n11scdn.akamaized.net/a1/640/14/27/84/19/IMG-1133524870660689935.jpg",
-      "skor": 3
-    },
-    {
-      "ad": "Çizgi Triko Erkek Polo Yaka Çift Cepli Astarlı Mevsimlik Haki Mont - A00001",
-      "fiyat": "3125.5",
+      "ad": "L.A Polo Kalın Taban Beyaz Lacivert Erkek Snekaer",
+      "fiyat": "875.63",
       "para_birimi": "TRY",
       "site": "trendyol.com",
-      "link": "https://www.trendyol.com/cizgi-triko/erkek-polo-yaka-cift-cepli-astarli-mevsimlik-haki-mont-a00001-p-926898677",
-      "gorsel": "https://cdn.dsmcdn.com/ty1936/prod/QC_ENRICHMENT/20260708/14/153f6802-2b34-3fd5-8b44-ec50357aec52/1_org_zoom.jpg",
+      "link": "https://www.trendyol.com/l-a-polo/kalin-taban-beyaz-lacivert-erkek-snekaer-p-951448992",
+      "gorsel": "https://cdn.dsmcdn.com/ty1702/prod/QC_PREP/20250702/15/2cf00e70-7fcb-3a93-b738-2dc6e957a1e1/1_org_zoom.jpg",
       "skor": 3
     },
     {
-      "ad": "Jack & Jones Erkek Mont Haki M Fiyatları ve Özellikleri",
-      "fiyat": "2000",
+      "ad": "Mayback Erkek Ortopedik Sneaker Ayakkabı Lacivert - Altın Renkli Düz Tabanlı Konforlu",
+      "fiyat": "969.99",
       "para_birimi": "TRY",
-      "site": "n11.com",
-      "link": "https://www.n11.com/urun/jack-jones-erkek-mont-haki-98354976",
-      "gorsel": "https://n11scdn.akamaized.net/a1/640/12/61/66/57/IMG-1082328754712436839.jpg",
+      "site": "hepsiburada.com",
+      "link": "https://www.hepsiburada.com/mayback-erkek-ortopedik-sneaker-ayakkabi-lacivert-altin-renkli-duz-tabanli-konforlu-tasarim-p-HBCV0000E6V879",
+      "gorsel": "https://productimages.hepsiburada.net/s/777/375/110001675053842.jpg/format:webp",
       "skor": 3
     },
     {
-      "ad": "Tudors Erkek Slim Fit Dar Kesim Çift Cepli Çıtçıt Kapamalı Haki Mont",
-      "fiyat": "2909.98",
+      "ad": "Cabani Triko Lacivert Bağcıklı Erkek Spor Ayakkabı",
+      "fiyat": "2422.5",
       "para_birimi": "TRY",
       "site": "trendyol.com",
-      "link": "https://www.trendyol.com/tudors/erkek-slim-fit-dar-kesim-cift-cepli-citcit-kapamali-haki-mont-p-1110590790",
-      "gorsel": "https://cdn.dsmcdn.com/ty1000390/product/media/images/prod/PIM/20260420/07/f4e98e68-0202-4c83-acfb-040d9aa755cf/1_org_zoom.jpg",
+      "link": "https://www.trendyol.com/cabani/triko-lacivert-bagcikli-erkek-spor-ayakkabi-p-678386707",
+      "gorsel": "https://cdn.dsmcdn.com/ty1631/prod/QC/20250126/11/79970cf0-34a0-30d4-832f-4accab32b2df/1_org_zoom.jpg",
       "skor": 3
     },
     {
-      "ad": "Lumberjack Ml Supernova 1blk1000 5pr Haki Erkek Mont 000000000102042487 Haki S Fiyatları ve Özellikleri",
-      "fiyat": "1285",
+      "ad": "U.S. Polo Assn. Franco 2fx Lacivert Erkek",
+      "fiyat": "999.00",
+      "para_birimi": "TRY",
+      "site": "hepsiburada.com",
+      "link": "https://www.hepsiburada.com/u-s-polo-assn-franco-2fx-lacivert-erkek-sneaker-p-HBCV00001RN8I9",
+      "gorsel": "https://productimages.hepsiburada.net/s/187/375/110000152576071.jpg/format:webp",
+      "skor": 2
+    },
+    {
+      "ad": "Adidas If7087 Handball Spezial Erkek Günlük Ayakkabı Lacivert 46 Fiyatları ve Özellikleri",
+      "fiyat": "6399",
       "para_birimi": "TRY",
       "site": "n11.com",
-      "link": "https://www.n11.com/urun/lumberjack-ml-supernova-1blk1000-5pr-haki-erkek-mont-000000000102042487-haki-102021467",
+      "link": "https://www.n11.com/urun/adidas-if7087-handball-spezial-erkek-gunluk-ayakkabi-lacivert-57918157",
+      "gorsel": "https://n11scdn.akamaized.net/a1/640/14/87/87/62/IMG-3647726057190533607.jpg",
+      "skor": 2
+    },
+    {
+      "ad": "Dockers By Gerli 238547 5fx Lacivert Erkek Sneaker 000000000101946066 Lacivert 40 Fiyatları ve Özellikleri",
+      "fiyat": "1599.99",
+      "para_birimi": "TRY",
+      "site": "n11.com",
+      "link": "https://www.n11.com/urun/dockers-by-gerli-238547-5fx-lacivert-erkek-sneaker-000000000101946066-lacivert-76874521",
       "gorsel": "https://n11scdn2-im.akamaized.net/a1/640/20/09/21/84/44/56/86/11/27/49/86/67/01624004745729654692.jpg",
-      "skor": 3
+      "skor": 2
     },
     {
-      "ad": "MOT&MONT Erkek Pamuk Polyester Karışım BONDED Kumaş Su ve RÜzgar Geçirmez Hafif Günlük & Mevsimlik & Yazlık BABA Montu LACİVERT !!! 1 BEDEN KÜÇÜK ALINIZ !!!",
-      "fiyat": "1279.2",
+      "ad": "Ea7 Unisex Ayakkabı 7x000334 Af18610 Mb198 Lacivert-beyaz Lacivert-beyaz 42 Fiyatları ve Özellikleri",
+      "fiyat": "14995.08",
+      "para_birimi": "TRY",
+      "site": "n11.com",
+      "link": "https://www.n11.com/urun/ea7-unisex-ayakkabi-7x000334-af18610-mb198-lacivert-beyaz-lacivert-beyaz-95653242",
+      "gorsel": "https://n11scdn2-im.akamaized.net/a1/640/20/09/21/84/44/56/86/11/27/49/86/67/01624004745729654692.jpg",
+      "skor": 2
+    },
+    {
+      "ad": "mayback Erkek Günlük Ortopedik Sneaker Ayakkabı",
+      "fiyat": "758.67",
       "para_birimi": "TRY",
       "site": "trendyol.com",
-      "link": "https://www.trendyol.com/mot-mont/erkek-pamuk-polyester-karisim-bonded-kumas-su-ve-ruzgar-gecirmez-hafif-gunluk-mevsimlik-yazlik-baba-montu-lacivert-1-beden-kucuk-aliniz-p-1153421155",
-      "gorsel": "https://cdn.dsmcdn.com/ty1917/prod/QC_ENRICHMENT/20260702/19/a36e4808-f061-3e8d-b4b5-2b09ca088c45/1_org_zoom.jpg",
-      "skor": 2
+      "link": "https://www.trendyol.com/mayback/erkek-gunluk-ortopedik-sneaker-ayakkabi-p-1093288547",
+      "gorsel": "https://cdn.dsmcdn.com/ty1818/prod/QC_ENRICHMENT/20260203/23/e769861d-4891-3c58-a739-47dcc22954d3/1_org_zoom.jpg",
+      "skor": 1
     },
     {
-      "ad": "Erkek Mevsimlik Mont Ceket Düğmeli 4 Cepli %100 Pamuk",
-      "fiyat": "2399.00",
+      "ad": "Arriva Bağsız Lastikli Hafif Erkek Günlük Spor",
+      "fiyat": "999.90",
       "para_birimi": "TRY",
       "site": "hepsiburada.com",
-      "link": "https://www.hepsiburada.com/erkek-mevsimlik-mont-ceket-dugmeli-4-cepli-100-pamuk-kumas-p-HBCV00008WNZ27",
-      "gorsel": "https://productimages.hepsiburada.net/s/777/375/110001045790537.jpg/format:webp",
-      "skor": 2
-    },
-    {
-      "ad": "Fabrika Sports Sweatmont, L,",
-      "fiyat": "499.99",
-      "para_birimi": "TRY",
-      "site": "hepsiburada.com",
-      "link": "https://www.hepsiburada.com/fabrika-sports-sweatmont-l-haki-p-HBCV000046E0FL",
-      "gorsel": "https://productimages.hepsiburada.net/s/392/375/110000416770451.jpg/format:webp",
-      "skor": 2
-    },
-    {
-      "ad": "Kiğılı Dik Yaka Şişme",
-      "fiyat": "880.11",
-      "para_birimi": "TRY",
-      "site": "hepsiburada.com",
-      "link": "https://www.hepsiburada.com/kigili-dik-yaka-sisme-mont-p-HBCV00003VYFMQ",
-      "gorsel": "https://productimages.hepsiburada.net/s/369/375/110000386370907.jpg/format:webp",
+      "link": "https://www.hepsiburada.com/arriva-bagsiz-lastikli-hafif-erkek-gunluk-spor-ayakkabi-p-HBCV00001WB6XQ",
+      "gorsel": "https://productimages.hepsiburada.net/s/80/375/110000022900801.jpg/format:webp",
       "skor": 1
     }
   ]
