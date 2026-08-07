@@ -13,3 +13,8 @@ data/cache/
 # Loglar
 scripts/run_daily.log
 *.log
+
+# Sirlar (Jira API token, Anthropic API key vb.) - ASLA push'lanmaz
+.jira_token
+.anthropic_key
+.secrets/

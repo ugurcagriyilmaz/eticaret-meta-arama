@@ -5,3 +5,4 @@ extruct>=0.17
 lxml>=5.2
 w3lib>=2.1
 playwright>=1.40
+anthropic>=0.40
