@@ -132,7 +132,8 @@ def from_structured(html: str, url: str) -> Optional[dict]:
     offer = _parse_offer(product.get("offers"))
     gorsel = product.get("image")
     if isinstance(gorsel, dict):
-        gorsel = gorsel.get("url") or gorsel.get("@value")
+        # Trendyol image'ı ImageObject: URL 'contentUrl'de (liste olabilir)
+        gorsel = gorsel.get("url") or gorsel.get("contentUrl") or gorsel.get("@value")
     return {
         "ad": _text(product.get("name")),
         "fiyat": offer["fiyat"],
@@ -160,6 +161,18 @@ def _price_from_embedded(html: str) -> Optional[str]:
     m = re.search(r'"price"\s*:\s*"([\d.,]+)\s*TL"', html)
     if m:
         return m.group(1).replace(".", "").replace(",", ".")
+    return None
+
+
+def _image_from_embedded(html: str) -> Optional[str]:
+    """n11 gibi siteler GERÇEK ürün görselini sayfa içi JSON'da 'productImageDTO'
+    altında tutar; JSON-LD'deki 'image' çoğu zaman generic/logo olur. '{0}' bir
+    boyut yer tutucusu → 640 ile doldurulur."""
+    import re
+
+    m = re.search(r'productImageDTO"?:\s*\{[^}]*?"path"\s*:\s*"([^"]+)"', html)
+    if m:
+        return m.group(1).replace("{0}", "640")
     return None
 
 
@@ -213,6 +226,10 @@ def extract(url: str) -> dict:
         for k, v in fb.items():
             if not result.get(k):
                 result[k] = v
+        # n11 gibi: gömülü GERÇEK ürün görseli varsa JSON-LD'nin generic'ini geç
+        emb_img = _image_from_embedded(html)
+        if emb_img:
+            result["gorsel"] = emb_img
         result["kaynak"] = "json-ld+fallback"
         return result
     return fb

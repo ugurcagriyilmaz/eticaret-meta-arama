@@ -8,25 +8,34 @@
     "beden": null,
     "_ham_sorgu": "haki erkek mont"
   },
-  "guncelleme": "2026-08-07T09:38:09.340444+00:00",
+  "guncelleme": "2026-08-07T09:58:28.370921+00:00",
   "adet": 9,
   "urunler": [
-    {
-      "ad": "Çizgi Triko Erkek Polo Yaka Çift Cepli Astarlı Mevsimlik Haki Mont - A00001",
-      "fiyat": "3125.5",
-      "para_birimi": "TRY",
-      "site": "trendyol.com",
-      "link": "https://www.trendyol.com/cizgi-triko/erkek-polo-yaka-cift-cepli-astarli-mevsimlik-haki-mont-a00001-p-926898677",
-      "gorsel": null,
-      "skor": 3
-    },
     {
       "ad": "Pierre Cardin Erkek Haki Mont 50325313-vr027 56 Fiyatları ve Özellikleri",
       "fiyat": "1979.1",
       "para_birimi": "TRY",
       "site": "n11.com",
       "link": "https://www.n11.com/urun/pierre-cardin-erkek-haki-mont-50325313-vr027-129309295",
-      "gorsel": "https://n11scdn2-im.akamaized.net/a1/640/20/09/21/84/44/56/86/11/27/49/86/67/01624004745729654692.jpg",
+      "gorsel": "https://n11scdn.akamaized.net/a1/640/14/27/84/19/IMG-1133524870660689935.jpg",
+      "skor": 3
+    },
+    {
+      "ad": "Çizgi Triko Erkek Polo Yaka Çift Cepli Astarlı Mevsimlik Haki Mont - A00001",
+      "fiyat": "3125.5",
+      "para_birimi": "TRY",
+      "site": "trendyol.com",
+      "link": "https://www.trendyol.com/cizgi-triko/erkek-polo-yaka-cift-cepli-astarli-mevsimlik-haki-mont-a00001-p-926898677",
+      "gorsel": "https://cdn.dsmcdn.com/ty1936/prod/QC_ENRICHMENT/20260708/14/153f6802-2b34-3fd5-8b44-ec50357aec52/1_org_zoom.jpg",
+      "skor": 3
+    },
+    {
+      "ad": "Jack & Jones Erkek Mont Haki M Fiyatları ve Özellikleri",
+      "fiyat": "2000",
+      "para_birimi": "TRY",
+      "site": "n11.com",
+      "link": "https://www.n11.com/urun/jack-jones-erkek-mont-haki-98354976",
+      "gorsel": "https://n11scdn.akamaized.net/a1/640/12/61/66/57/IMG-1082328754712436839.jpg",
       "skor": 3
     },
     {
@@ -35,16 +44,7 @@
       "para_birimi": "TRY",
       "site": "trendyol.com",
       "link": "https://www.trendyol.com/tudors/erkek-slim-fit-dar-kesim-cift-cepli-citcit-kapamali-haki-mont-p-1110590790",
-      "gorsel": null,
-      "skor": 3
-    },
-    {
-      "ad": "Jack & Jones Erkek Mont Haki XS Fiyatları ve Özellikleri",
-      "fiyat": "2000",
-      "para_birimi": "TRY",
-      "site": "n11.com",
-      "link": "https://www.n11.com/urun/jack-jones-erkek-mont-haki-98354976",
-      "gorsel": "https://n11scdn2-im.akamaized.net/a1/640/20/09/21/84/44/56/86/11/27/49/86/67/01624004745729654692.jpg",
+      "gorsel": "https://cdn.dsmcdn.com/ty1000390/product/media/images/prod/PIM/20260420/07/f4e98e68-0202-4c83-acfb-040d9aa755cf/1_org_zoom.jpg",
       "skor": 3
     },
     {
@@ -55,6 +55,15 @@
       "link": "https://www.n11.com/urun/lumberjack-ml-supernova-1blk1000-5pr-haki-erkek-mont-000000000102042487-haki-102021467",
       "gorsel": "https://n11scdn2-im.akamaized.net/a1/640/20/09/21/84/44/56/86/11/27/49/86/67/01624004745729654692.jpg",
       "skor": 3
+    },
+    {
+      "ad": "MOT&MONT Erkek Pamuk Polyester Karışım BONDED Kumaş Su ve RÜzgar Geçirmez Hafif Günlük & Mevsimlik & Yazlık BABA Montu LACİVERT !!! 1 BEDEN KÜÇÜK ALINIZ !!!",
+      "fiyat": "1279.2",
+      "para_birimi": "TRY",
+      "site": "trendyol.com",
+      "link": "https://www.trendyol.com/mot-mont/erkek-pamuk-polyester-karisim-bonded-kumas-su-ve-ruzgar-gecirmez-hafif-gunluk-mevsimlik-yazlik-baba-montu-lacivert-1-beden-kucuk-aliniz-p-1153421155",
+      "gorsel": "https://cdn.dsmcdn.com/ty1917/prod/QC_ENRICHMENT/20260702/19/a36e4808-f061-3e8d-b4b5-2b09ca088c45/1_org_zoom.jpg",
+      "skor": 2
     },
     {
       "ad": "Erkek Mevsimlik Mont Ceket Düğmeli 4 Cepli %100 Pamuk",
@@ -72,15 +81,6 @@
       "site": "hepsiburada.com",
       "link": "https://www.hepsiburada.com/fabrika-sports-sweatmont-l-haki-p-HBCV000046E0FL",
       "gorsel": "https://productimages.hepsiburada.net/s/392/375/110000416770451.jpg/format:webp",
-      "skor": 2
-    },
-    {
-      "ad": "MOT&MONT Erkek Pamuk Polyester Karışım BONDED Kumaş Su ve RÜzgar Geçirmez Hafif Günlük & Mevsimlik & Yazlık BABA Montu LACİVERT !!! 1 BEDEN KÜÇÜK ALINIZ !!!",
-      "fiyat": "1279.2",
-      "para_birimi": "TRY",
-      "site": "trendyol.com",
-      "link": "https://www.trendyol.com/mot-mont/erkek-pamuk-polyester-karisim-bonded-kumas-su-ve-ruzgar-gecirmez-hafif-gunluk-mevsimlik-yazlik-baba-montu-lacivert-1-beden-kucuk-aliniz-p-1153421155",
-      "gorsel": null,
       "skor": 2
     },
     {
