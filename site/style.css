@@ -9,6 +9,7 @@ body {
   margin: 0; background: var(--bg); color: var(--tx);
   font: 15px/1.55 -apple-system, "Segoe UI", system-ui, Inter, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
+  padding-bottom: 56px; /* sabit footer için yer */
 }
 
 /* Başlık / wordmark */
@@ -101,8 +102,9 @@ main { max-width: 1080px; margin: 0 auto; padding: 22px 20px 40px; }
 .bos { text-align: center; color: var(--mut); margin-top: 40px; }
 
 footer {
-  max-width: 1080px; margin: 26px auto 0; border-top: 1px solid var(--line);
-  color: var(--mut); font-size: 12px; padding: 18px 20px 34px;
-  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+  background: #14171c; color: #ffffff; font-size: 12.5px;
+  padding: 13px clamp(16px, 5vw, 40px);
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
 }
-.guncelleme { color: #9aa1ab; }
+.guncelleme { color: rgba(255, 255, 255, .6); }
