@@ -23,7 +23,7 @@ def fold(s: str) -> str:
 
 RENKLER = {
     "beyaz", "siyah", "kırmızı", "mavi", "yeşil", "sarı", "gri", "pembe",
-    "mor", "turuncu", "kahverengi", "lacivert", "bej", "bordo",
+    "mor", "turuncu", "kahverengi", "lacivert", "bej", "bordo", "haki", "petrol",
 }
 CINSIYET = {
     "erkek": "erkek", "kadın": "kadın", "kadin": "kadın",
