@@ -234,6 +234,8 @@ def extract(url: str) -> dict:
         emb_img = _image_from_embedded(html)
         if emb_img:
             result["gorsel"] = emb_img
+        elif "n11.com" in (final_url or ""):
+            result["gorsel"] = None  # gerçek görsel yoksa n11 logosunu gösterme → "görsel yok"
         result["kaynak"] = "json-ld+fallback"
         return result
     return fb
